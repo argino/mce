@@ -1,7 +1,5 @@
 package com.cognizant.mce.restService;
 
-
-
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +13,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.ext.Provider;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
+
 import org.springframework.stereotype.Service;
 
 import com.cognizant.mce.dao.CustomerDAO;
@@ -28,17 +26,16 @@ import com.cognizant.mce.entity.Customer;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-
-//@Stateless
-//@LocalBean
-@Service("customerService")
-@Controller
-@Provider
+@Service
 @Path("/customers")
 public class CustomerService {
-	
-	private CustomerDAO dao;
-	
+
+	private CustomerDAO customerDAO;
+
+	public void setCustomerDAO(CustomerDAO customerDAO) {
+		this.customerDAO = customerDAO;
+	}
+
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/serviceIsAlive")
@@ -46,60 +43,57 @@ public class CustomerService {
 		return Response.ok("Hallo Service wurde aufgerufen!!").build();
 	}
 	// DTO Solution
-//	@GET
-//	@Path("/list")
-//	@Produces({ MediaType.APPLICATION_JSON })
-//	public Response listAllCustomers() {
-//		try {
-//			List<Customer> listCustomer = new ArrayList<Customer>();
-//			AccessManager access = new AccessManager();
-//			listCustomer = access.getAllCustomers();
-//			new Gson().toJson(listCustomer);
-//			return Response.ok(listCustomer).build();
-//		} catch (Exception ex) {
-//			String result = "{\"Message\":" + ex.getMessage() + "\"}";
-//			ex.getLocalizedMessage();
-//			return Response.status(Response.Status.NOT_FOUND.getStatusCode()).entity(result).build();
-//		}
-//	}
+	// @GET
+	// @Path("/list")
+	// @Produces({ MediaType.APPLICATION_JSON })
+	// public Response listAllCustomers() {
+	// try {
+	// List<Customer> listCustomer = new ArrayList<Customer>();
+	// AccessManager access = new AccessManager();
+	// listCustomer = access.getAllCustomers();
+	// new Gson().toJson(listCustomer);
+	// return Response.ok(listCustomer).build();
+	// } catch (Exception ex) {
+	// String result = "{\"Message\":" + ex.getMessage() + "\"}";
+	// ex.getLocalizedMessage();
+	// return
+	// Response.status(Response.Status.NOT_FOUND.getStatusCode()).entity(result).build();
+	// }
+	// }
 
-//	@GET
-//	@Path("/listXML")
-//	@Produces({ MediaType.APPLICATION_XML })
-//	public Response listAllCustomersXML() {
-//		String XMLList = null;
-//		try {
-//			XStream xStream = new XStream(new DomDriver());
-//			List<Customer> listCustomer = new ArrayList<Customer>();
-//			AccessManager access = new AccessManager();
-//			listCustomer = access.getAllCustomers();
-//			System.out.println(listCustomer);
-//			XMLList = new XStream().toXML(listCustomer);
-//			xStream.alias("customer", Customer.class);
-//			System.out.println(XMLList);
-//			return Response.ok(XMLList).build();
-//		} catch (Exception ex) {
-//			String result = "{\"Message\":" + ex.getMessage() + "\"}";
-//			ex.printStackTrace();
-//			ex.getLocalizedMessage();
-//			return Response.status(Response.Status.NOT_FOUND.getStatusCode()).entity(result).build();
-//		}
-//	}
-
-	
-	public void setDao(CustomerDAO dao) {
-		this.dao = dao;
-	}
+	// @GET
+	// @Path("/listXML")
+	// @Produces({ MediaType.APPLICATION_XML })
+	// public Response listAllCustomersXML() {
+	// String XMLList = null;
+	// try {
+	// XStream xStream = new XStream(new DomDriver());
+	// List<Customer> listCustomer = new ArrayList<Customer>();
+	// AccessManager access = new AccessManager();
+	// listCustomer = access.getAllCustomers();
+	// System.out.println(listCustomer);
+	// XMLList = new XStream().toXML(listCustomer);
+	// xStream.alias("customer", Customer.class);
+	// System.out.println(XMLList);
+	// return Response.ok(XMLList).build();
+	// } catch (Exception ex) {
+	// String result = "{\"Message\":" + ex.getMessage() + "\"}";
+	// ex.printStackTrace();
+	// ex.getLocalizedMessage();
+	// return
+	// Response.status(Response.Status.NOT_FOUND.getStatusCode()).entity(result).build();
+	// }
+	// }
 
 	// JPA Solution
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	@Path("/list/{id}")
 	public Response getById(@PathParam("id") int id) {
-		CustomerDAO dao = new CustomerDAO();
+		// CustomerDAO dao= new CustomerDAO();
 		Customer customer = new Customer();
 		try {
-			customer = dao.getCustomerById(id);
+			customer = customerDAO.getCustomerById(id);
 			if (customer == null)
 				return Response.status(Status.NOT_FOUND).entity("Error: Kunde wurde nicht gefunden").build();
 			else
@@ -114,12 +108,13 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_XML)
 	@Path("/findByLastName/{lastName}")
 	public Response findCustomersByLastName(@PathParam("lastName") String lastName) {
-		CustomerDAO dao = new CustomerDAO();
+		// CustomerDAO dao = null;
 		XStream xStream = new XStream(new DomDriver());
 		String XMLList = null;
 		try {
 			List<Customer> customersList = new ArrayList<Customer>();
-			customersList = dao.getCustomerByLastName(lastName);
+			customersList = customerDAO.getCustomerByLastName(lastName);
+			System.out.println(customersList);
 			// from customer object into XML string
 			XMLList = new XStream().toXML(customersList);
 			xStream.alias("customers", Customer.class);
@@ -138,7 +133,7 @@ public class CustomerService {
 	@Path("/updateCustomerById/{id}")
 	public Response updateCustomerById(String XMLstring, @PathParam("id") int id) {
 		Customer customer = new Customer();
-		//CustomerDAO dao = new CustomerDAO();
+		// CustomerDAO dao = new CustomerDAO();
 		int result = 0;
 		try {
 			// From XML String into customer object
@@ -146,7 +141,7 @@ public class CustomerService {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Customer.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			customer = (Customer) unmarshaller.unmarshal(sr);
-			result = dao.updateCustomer(customer, id);
+			result = customerDAO.updateCustomer(customer, id);
 		} catch (Exception ex) {
 			System.out.println("" + ex.getMessage());
 			ex.getStackTrace();

@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
+
 
 import com.cognizant.mce.entity.Customer;
 
@@ -24,12 +24,12 @@ public class CustomerDAO {
 		try {
 			factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 			EntityManager entityManager = factory.createEntityManager();
-			//customer = entityManager.find(Customer.class, customerId);
+			customer = entityManager.find(Customer.class, customerId);
 			// funktioniert auch
-
-			 Query q = entityManager.createQuery("SELECT c FROM Customer c WHERE c.id = :id");
-			 q.setParameter("id", customerId);
-			 customer=(Customer) q.getSingleResult();
+//
+//			 Query q = entityManager.createQuery("SELECT c FROM Customer c WHERE c.id = :id");
+//			 q.setParameter("id", customerId);
+//			 customer=(Customer) q.getSingleResult();
 		} catch (Exception ex) {
 			ex.getMessage();
 			System.out.println("Fehler bei der Abfrage des Kunden: " + ex.getLocalizedMessage());

@@ -3,7 +3,7 @@ package com.cognizant.mce.entity;
 
 import java.io.Serializable;
 
-import javax.inject.Named;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
@@ -29,7 +29,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 	@NamedQuery(name = "Customer.updateCustomerById",
 				query= "UPDATE Customer c SET c.firstName =:firstName, c.lastName =:lastName , c.email=:email, c.phoneNo=:phone WHERE c.id = :id")
 })
-@Named
+
 @Access(AccessType.FIELD)
 @Table(name = "customers")
 @XStreamAlias("customers")
