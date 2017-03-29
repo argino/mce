@@ -23,23 +23,9 @@ http://maven.apache.org/maven-v4_0_0.xsd">
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <artifactId>maven-war-plugin</artifactId> -->
-			<!-- <version>2.6</version> -->
-			<!-- <configuration> -->
-			<!-- <warSourceDirectory>WebContent</warSourceDirectory> -->
-			<!-- <failOnMissingWebXml>false</failOnMissingWebXml> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
 		</plugins>
 	</build>
-	<!-- <build> -->
-	<!-- <resources> -->
-	<!-- <resource> -->
-	<!-- <directory>src</directory> -->
-	<!-- </resource> -->
-	<!-- </resources> -->
-	<!-- </build> -->
+	
 
 	<dependencyManagement>
 		<dependencies>
@@ -168,16 +154,11 @@ http://maven.apache.org/maven-v4_0_0.xsd">
 			<artifactId>eclipselink</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-
-
-
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>org.eclipse.persistence.jpa</artifactId>
 			<version>2.6.4</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
@@ -198,12 +179,6 @@ http://maven.apache.org/maven-v4_0_0.xsd">
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>log4j</groupId> -->
-		<!-- <artifactId>log4j</artifactId> -->
-		<!-- <version>1.2.17</version> -->
-		<!-- </dependency> -->
-
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -216,15 +191,13 @@ http://maven.apache.org/maven-v4_0_0.xsd">
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-
 	</dependencies>
+	
 	<properties>
 		<jersey.version>2.26-b03</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
 	</properties>
-
+	
 	<repositories>
 		<repository>
 			<id>EclipseLink</id>

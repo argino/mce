@@ -1,8 +1,6 @@
 package com.cognizant.mce.entity;
 
-
 import java.io.Serializable;
-
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -18,23 +16,15 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-
-@NamedQueries({
-	@NamedQuery(name = "Customer.findAll",
-				query= "SELECT c FROM Customer c"),
-	@NamedQuery(name = "Customer.findById",
-				query= "SELECT c FROM Customer c WHERE c.id = :id"),
-	@NamedQuery(name = "Customer.findByLastName",
-				query= "SELECT c FROM Customer c WHERE c.lastName = :lastName"),
-	@NamedQuery(name = "Customer.updateCustomerById",
-				query= "UPDATE Customer c SET c.firstName =:firstName, c.lastName =:lastName , c.email=:email, c.phoneNo=:phone WHERE c.id = :id")
-})
+@NamedQueries({ @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
+		@NamedQuery(name = "Customer.findById", query = "SELECT c FROM Customer c WHERE c.id = :id"),
+		@NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM Customer c WHERE c.lastName = :lastName"),
+		@NamedQuery(name = "Customer.updateCustomerById", query = "UPDATE Customer c SET c.firstName =:firstName, c.lastName =:lastName , c.email=:email, c.phoneNo=:phone WHERE c.id = :id") })
 
 @Access(AccessType.FIELD)
 @Table(name = "customers")
 @XStreamAlias("customers")
 @XmlRootElement(name = "customer")
-//@XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "id", "firstName", "lastName", "email", "phoneNo" })
 @Entity
 public class Customer implements Serializable {
@@ -51,8 +41,9 @@ public class Customer implements Serializable {
 	@Column(name = "phone")
 	private String phoneNo = null;
 
-	public Customer(){}
-	
+	public Customer() {
+	}
+
 	public int getId() {
 		return id;
 	}

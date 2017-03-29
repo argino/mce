@@ -42,49 +42,7 @@ public class CustomerService {
 	public Response serviceIsAlive() {
 		return Response.ok("Hallo Service wurde aufgerufen!!").build();
 	}
-	// DTO Solution
-	// @GET
-	// @Path("/list")
-	// @Produces({ MediaType.APPLICATION_JSON })
-	// public Response listAllCustomers() {
-	// try {
-	// List<Customer> listCustomer = new ArrayList<Customer>();
-	// AccessManager access = new AccessManager();
-	// listCustomer = access.getAllCustomers();
-	// new Gson().toJson(listCustomer);
-	// return Response.ok(listCustomer).build();
-	// } catch (Exception ex) {
-	// String result = "{\"Message\":" + ex.getMessage() + "\"}";
-	// ex.getLocalizedMessage();
-	// return
-	// Response.status(Response.Status.NOT_FOUND.getStatusCode()).entity(result).build();
-	// }
-	// }
-
-	// @GET
-	// @Path("/listXML")
-	// @Produces({ MediaType.APPLICATION_XML })
-	// public Response listAllCustomersXML() {
-	// String XMLList = null;
-	// try {
-	// XStream xStream = new XStream(new DomDriver());
-	// List<Customer> listCustomer = new ArrayList<Customer>();
-	// AccessManager access = new AccessManager();
-	// listCustomer = access.getAllCustomers();
-	// System.out.println(listCustomer);
-	// XMLList = new XStream().toXML(listCustomer);
-	// xStream.alias("customer", Customer.class);
-	// System.out.println(XMLList);
-	// return Response.ok(XMLList).build();
-	// } catch (Exception ex) {
-	// String result = "{\"Message\":" + ex.getMessage() + "\"}";
-	// ex.printStackTrace();
-	// ex.getLocalizedMessage();
-	// return
-	// Response.status(Response.Status.NOT_FOUND.getStatusCode()).entity(result).build();
-	// }
-	// }
-
+	
 	// JPA Solution
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
@@ -108,7 +66,6 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_XML)
 	@Path("/findByLastName/{lastName}")
 	public Response findCustomersByLastName(@PathParam("lastName") String lastName) {
-		// CustomerDAO dao = null;
 		XStream xStream = new XStream(new DomDriver());
 		String XMLList = null;
 		try {
@@ -133,7 +90,6 @@ public class CustomerService {
 	@Path("/updateCustomerById/{id}")
 	public Response updateCustomerById(String XMLstring, @PathParam("id") int id) {
 		Customer customer = new Customer();
-		// CustomerDAO dao = new CustomerDAO();
 		int result = 0;
 		try {
 			// From XML String into customer object

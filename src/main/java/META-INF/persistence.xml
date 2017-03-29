@@ -5,14 +5,9 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-
-<!-- 	<persistence-unit name="cstmpu" transaction-type="RESOURCE_LOCAL"> -->
 	<persistence-unit name="cstmpu" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.cognizant.mce.entity.Customer</class>
-<!-- 		<mapping-file>META-INF/persistence.xml</mapping-file> -->
-	<!--  <mapping-file>META-INF/persistence.xml</mapping-file> --> 
-		<!-- <jta-data-source></jta-data-source> -->
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
